@@ -44,13 +44,13 @@ class ReportController extends ApiController
         $financialStats['balance'] = $financialStats['total_income'] - $financialStats['total_expense'];
 
         $monthlyDonations = Donation::select(
-            DB::raw('MONTH(donated_at) as month'),
+            DB::raw('EXTRACT(MONTH FROM donated_at)::int as month'),
             DB::raw('SUM(amount) as total')
         )
             ->where('status', 'completed')
             ->whereYear('donated_at', $year)
-            ->groupBy('month')
-            ->orderBy('month')
+            ->groupByRaw('EXTRACT(MONTH FROM donated_at)')
+            ->orderByRaw('EXTRACT(MONTH FROM donated_at)')
             ->get();
 
         $recentActivity = collect([

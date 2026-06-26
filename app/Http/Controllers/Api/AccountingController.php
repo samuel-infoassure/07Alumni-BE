@@ -27,13 +27,13 @@ class AccountingController extends ApiController
         $totalExpense = $transactions->where('type', 'expense')->sum('amount');
 
         $monthlyBreakdown = AccountTransaction::select(
-            DB::raw('MONTH(transaction_date) as month'),
-            DB::raw('SUM(CASE WHEN type = "income" THEN amount ELSE 0 END) as income'),
-            DB::raw('SUM(CASE WHEN type = "expense" THEN amount ELSE 0 END) as expense')
+            DB::raw('EXTRACT(MONTH FROM transaction_date)::int as month'),
+            DB::raw("SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) as income"),
+            DB::raw("SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) as expense")
         )
             ->whereYear('transaction_date', $year)
-            ->groupBy('month')
-            ->orderBy('month')
+            ->groupByRaw('EXTRACT(MONTH FROM transaction_date)')
+            ->orderByRaw('EXTRACT(MONTH FROM transaction_date)')
             ->get();
 
         return $this->success([
