@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#0B1C5C" rx="90"/>
+  <text x="256" y="295" font-family="system-ui,-apple-system,BlinkMacSystemFont,sans-serif" font-weight="800" font-size="196" fill="#C8A400" text-anchor="middle">07</text>
+  <text x="256" y="380" font-family="system-ui,-apple-system,BlinkMacSystemFont,sans-serif" font-weight="600" font-size="54" fill="rgba(255,255,255,0.70)" text-anchor="middle" letter-spacing="16">ENG</text>
+</svg>
