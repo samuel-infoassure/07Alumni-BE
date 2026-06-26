@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // Admin/test user
         $admin = User::firstOrCreate(
-            ['email' => 'admin@07alumni.com'],
+            ['email' => 'saudexgpt@gmail.com'],
             [
-                'email'      => 'admin@07alumni.com',
-                'password'   => Hash::make('password'),
+                'email'      => 'saudexgpt@gmail.com',
+                'password'   => Hash::make('Password@123.'),
                 'api_token'  => hash('sha256', 'admin-secret-token-2024'),
                 'first_name' => 'Admin',
                 'last_name'  => 'User',
@@ -30,31 +30,7 @@ class DatabaseSeeder extends Seeder
         AlumniProfile::firstOrCreate(
             ['user_id' => $admin->id],
             [
-                'department'            => 'Computer Engineering',
-                'membership_status'     => 'active',
-                'accepted_constitution' => true,
-                'committed_dues'        => true,
-                'consented_data'        => true,
-            ]
-        );
-
-        // Demo member
-        $member = User::firstOrCreate(
-            ['email' => 'ezekiel@infoassureltd.com'],
-            [
-                'email'      => 'ezekiel@infoassureltd.com',
-                'password'   => Hash::make('password'),
-                'api_token'  => hash('sha256', 'member-secret-token-2024'),
-                'first_name' => 'Ezekiel',
-                'last_name'  => 'Udoh',
-                'phone'      => '+2348000000000',
-            ]
-        );
-
-        AlumniProfile::firstOrCreate(
-            ['user_id' => $member->id],
-            [
-                'department'            => 'Computer Engineering',
+                'department'            => 'Electrical/Electronics Engineering',
                 'membership_status'     => 'active',
                 'accepted_constitution' => true,
                 'committed_dues'        => true,
@@ -91,7 +67,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        foreach ([$admin->id, $member->id] as $userId) {
+        foreach ([$admin->id] as $userId) {
             if (! $group->members()->where('user_id', $userId)->exists()) {
                 $group->members()->attach($userId, [
                     'role' => $userId === $admin->id ? 'admin' : 'member',
@@ -187,12 +163,7 @@ class DatabaseSeeder extends Seeder
         if ($superAdminRole && ! $admin->roles()->where('role_id', $superAdminRole->id)->exists()) {
             $admin->roles()->attach($superAdminRole->id);
         }
-        if ($memberRole && ! $member->roles()->where('role_id', $memberRole->id)->exists()) {
-            $member->roles()->attach($memberRole->id);
-        }
-
+        
         $this->command->info('Seed complete.');
-        $this->command->info('  Admin  : admin@07alumni.com          / password');
-        $this->command->info('  Member : ezekiel@infoassureltd.com   / password');
     }
 }
